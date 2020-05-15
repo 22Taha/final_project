@@ -31,7 +31,6 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
 
   export default {
     name: 'login',
@@ -41,22 +40,19 @@
       username: '',
       password: ''
     }),
-    computed:{
-      ...mapGetters([
-      'getUser'
-    ])
-    },
+        
     methods:{
       login(){
         if(this.username=='admin' && this.password=='admin'){
-          this.$router.push({ path: 'admin/home' })
+          this.$router.push({ name: 'home', params: { user: 'admin'} })
         }else{
-          if(this.getUser(this.username, this.password))
-              this.$router.push({ path: 'client/home' })
+          if(this.$store.getters.user(this.username, this.password))
+              this.$router.push({ name: 'home', params: {user: 'client'} })
           else
               alert('user doesn\'t exist !!')
         }
-      }
+      },
+    
     }
   }
 </script>
