@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from './../components/login'
-import homeAdmin from './../components/homeAdmin'
-import homeUser from './../components/homeUser'
+import home from './../components/home'
+import products from './../components/products'
+import orders from './../components/orders'
+import users from './../components/users'
 
 Vue.use(Router)
 
@@ -10,17 +12,34 @@ export default new Router({
     mode: 'history',
     routes: [
         {
-            path: '/login',
+            path: '/',
+            name: 'login',
             component: login
         },
         {
-            path: '/admin/home',
-            component: homeAdmin
+            path: '/:user/home',
+            name: 'home',
+            component: home,
+            children: [
+                {
+                    path: '/:user/products',
+                    name: 'products',
+                    component: products
+                },
+                {
+                    path: '/:user/orders',
+                    name: 'orders',
+                    component: orders
+                },
+                {
+                    path: '/:user/users',
+                    name: 'users',
+                    component: users
+                },
+            ]
         },
-        {
-            path: '/client/home',
-            component: homeUser
-        },
+        
+       
         
     ]
 })

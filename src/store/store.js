@@ -14,11 +14,16 @@ export const store = new Vuex.Store({
                 username: 'client',
                 password: 'client',
             },  
-        ],
+        ] 
     },
     getters:{
-        getUser: state => (username, password) => {
-            return state.users.find(element => element.username==username && element.password==password)
+        user: state => (username, password) => {
+            if(state.users.find(element => element.username==username && element.password==password))
+                return true
+            else return false 
+        },
+        users: state => {
+            return state.users
         }
     },
     mutations:{
