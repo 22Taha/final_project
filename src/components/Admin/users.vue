@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <h3>Orders</h3>
+    <h3>Admin -- Users</h3>
   </v-container>
 </template>
 
 <script>
   export default {
-    name: 'orders',
+    name: 'adminUsers',
 
   }
 </script>
