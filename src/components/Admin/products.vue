@@ -40,11 +40,15 @@
                   <v-col cols="12" sm="6">
                     <v-text-field v-model="editedProduct.price" type="number" min="1" step="0.01" label="Price"></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field v-model="editedProduct.description" label="Description"></v-text-field>
-                  </v-col>
+                  
                   <v-col cols="12" sm="6">
                       <v-select :items="categories" v-model="editedProduct.category" label="Category"></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field v-model="editedProduct.quantity" type="number" label="Quantity"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="12">
+                    <v-text-field v-model="editedProduct.description" label="Description"></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -122,6 +126,7 @@
         { text: 'Price', value: 'price' },
         { text: 'Description', value: 'description' },
         { text: 'Category', value: 'category' },
+        {text: 'Quantity',value:'quantity'},
         { text: 'Actions', value: 'actions', sortable: false },
       ],
     
@@ -130,14 +135,16 @@
         name: '',
         price: '',
         description: '',
-        category: '' 
+        category: '',
+        quantity:'' 
       },
       defaultItem: {
         id: '' ,
         name: '',
         price: '',
         description: '',
-        category: ''      },
+        category: '',
+        quantity:''       },
     }),
 
     computed: {

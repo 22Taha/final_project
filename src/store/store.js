@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         users: [
-            {
+            {   
+                id:1,
                 username: 'user',
                 password: 'user',
 
@@ -23,7 +24,8 @@ export const store = new Vuex.Store({
                     ],
                 }
             },
-            {
+            {   
+                id:2,
                 username: 'client',
                 password: 'client',
 
@@ -41,6 +43,7 @@ export const store = new Vuex.Store({
                 }
             },  
         ],
+        userNextId:3,
         categories: ['category1', 'category2'],
         productCountId: 3,
         products: [
@@ -49,14 +52,16 @@ export const store = new Vuex.Store({
                 name: 'prod1',
                 price: 300,
                 description: 'description1',
-                category: 'category1'
+                category: 'category1',
+                quantity:200
             },
             {
                 id: 2,
                 name: 'prod2',
                 price: 400,
                 description: 'description2',
-                category: 'category2'
+                category: 'category2',
+                quantity:15
             }
         ],
         orders: [
@@ -110,6 +115,28 @@ export const store = new Vuex.Store({
         },
         addCategory: (state, payload) => {
             state.categories.push(payload)
+        },
+        updateUser: (state, payload) => {
+            if(state.users.filter(user => user.id == payload.id).length){
+                state.users.filter(user => {
+                    if(user.id == payload.id){
+                        if(state.users.filter(user => user.username == payload.username).length) alert('this username is already token, retry')
+                        else  Object.assign(user, payload)
+                        
+                    }
+                })
+            }else{
+                if(state.users.filter(user => user.username == payload.username).length) alert('this username is already token, retry')
+                else{
+                payload.id = state.userNextId
+                state.users.push(payload)
+                state.userNextId++
+                }
+                
+            }
+        },
+        deleteUser: (state, payload) => {
+            state.users.splice(state.users.indexOf(payload), 1)
         },
         addOrder: (state, payload) => {
             state.users.filter(user => {
