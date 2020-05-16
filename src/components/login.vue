@@ -44,12 +44,14 @@
     methods:{
       login(){
         if(this.username=='admin' && this.password=='admin'){
+          sessionStorage.setItem('username', this.username)
           this.$router.push({ name: 'adminHome'})
         }else{
-          if(this.$store.getters.user(this.username, this.password))
-              this.$router.push({ name: 'clientHome'})
-          else
-              alert('user doesn\'t exist !!')
+          if(this.$store.getters.user(this.username, this.password)){
+            sessionStorage.setItem('username', this.username)
+            this.$router.push({ name: 'clientHome'})
+          }else
+            alert('user doesn\'t exist !!')
         }
       },
     
