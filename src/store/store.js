@@ -26,14 +26,16 @@ export const store = new Vuex.Store({
                 name: 'prod1',
                 price: 300,
                 description: 'description1',
-                category: 'category1'
+                category: 'category1',
+                quantity:200
             },
             {
                 id: 2,
                 name: 'prod2',
                 price: 400,
                 description: 'description2',
-                category: 'category2'
+                category: 'category2',
+                quantity:15
             }
         ],
         orders: [
