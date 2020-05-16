@@ -10,11 +10,37 @@ export const store = new Vuex.Store({
                 id:1,
                 username: 'user',
                 password: 'user',
+
+                curentOrder: {
+                    user: 'user',
+                    total: 1200,
+                    products: [
+                        {
+                            product_id: 1,
+                            product_name: 'prod1',
+                            price: 300,
+                            quantity: 4,
+                        }
+                    ],
+                }
             },
             {   
                 id:2,
                 username: 'client',
                 password: 'client',
+
+                curentOrder: {
+                    user: 'client',
+                    total: 800,
+                    products: [
+                        {
+                            product_id: 2,
+                            product_name: 'prod2',
+                            price: 400,
+                            quantity: 2,
+                        }
+                    ],
+                }
             },  
         ],
         userNextId:3,
@@ -42,13 +68,13 @@ export const store = new Vuex.Store({
             {
                 user: 'user',
                 validate: false,
-                total: '',
+                total: '1600',
                 products: [
                     {
-                        product_id: '',
-                        product_name: '',
-                        price: '',
-                        quantity: '',
+                        product_id: 2,
+                        product_name: 'prod2',
+                        price: 400,
+                        quantity: 4,
                     }
                 ]
             }
@@ -112,7 +138,21 @@ export const store = new Vuex.Store({
         deleteUser: (state, payload) => {
             state.users.splice(state.users.indexOf(payload), 1)
         },
+        addOrder: (state, payload) => {
+            state.users.filter(user => {
+                if(user.username == payload.username){
+                    user.curentOrder.total = user.curentOrder.total + (payload.price * payload.quantity)
+                    user.curentOrder.products.push({ 
+                        "product_id": payload.id, 
+                        "product_name": payload.name,
+                        "price": payload.price, 
+                        "quantity": payload.quantity,
+                    })
+                }
+            })
+        }
     },
+
     actions: {
 
     }

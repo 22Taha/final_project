@@ -44,19 +44,15 @@ export default new Router({
             ]
         },
         {
-            path: '/',
-            name: 'login',
-            component: login
-        },
-        {
             path: '/client/home',
             name: 'clientHome',
             component: clientHome,
+           
             children: [
                 {
                     path: '/client/products',
                     name: 'clientProducts',
-                    component: clientProducts
+                    component: clientProducts,
                 },
                 {
                     path: '/client/orders',
