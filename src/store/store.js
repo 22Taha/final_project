@@ -6,15 +6,18 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         users: [
-            {
+            {   
+                id:1,
                 username: 'user',
                 password: 'user',
             },
-            {
+            {   
+                id:2,
                 username: 'client',
                 password: 'client',
             },  
         ],
+        userNextId:3,
         categories: ['category1', 'category2'],
         productCountId: 3,
         products: [
@@ -84,7 +87,29 @@ export const store = new Vuex.Store({
         },
         addCategory: (state, payload) => {
             state.categories.push(payload)
-        }
+        },
+        updateUser: (state, payload) => {
+            if(state.users.filter(user => user.id == payload.id).length){
+                state.users.filter(user => {
+                    if(user.id == payload.id){
+                        if(state.users.filter(user => user.username == payload.username).length) alert('this username is already token, retry')
+                        else  Object.assign(user, payload)
+                        
+                    }
+                })
+            }else{
+                if(state.users.filter(user => user.username == payload.username).length) alert('this username is already token, retry')
+                else{
+                payload.id = state.userNextId
+                state.users.push(payload)
+                state.userNextId++
+                }
+                
+            }
+        },
+        deleteUser: (state, payload) => {
+            state.users.splice(state.users.indexOf(payload), 1)
+        },
     },
     actions: {
 
