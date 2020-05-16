@@ -44,10 +44,10 @@
     methods:{
       login(){
         if(this.username=='admin' && this.password=='admin'){
-          this.$router.push({ name: 'home', params: { user: 'admin'} })
+          this.$router.push({ name: 'adminHome'})
         }else{
           if(this.$store.getters.user(this.username, this.password))
-              this.$router.push({ name: 'home', params: {user: 'client'} })
+              this.$router.push({ name: 'clientHome'})
           else
               alert('user doesn\'t exist !!')
         }

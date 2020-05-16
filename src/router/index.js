@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from './../components/login'
-import home from './../components/home'
-import products from './../components/products'
-import orders from './../components/orders'
-import users from './../components/users'
+
+import adminHome from './../components/Admin/home'
+import adminProducts from './../components/Admin/products'
+import adminOrders from './../components/Admin/orders'
+import adminUsers from './../components/Admin/users'
+
+import clientHome from './../components/Client/home'
+import clientProducts from './../components/Client/products'
+import clientOrders from './../components/Client/orders'
 
 Vue.use(Router)
 
@@ -17,29 +22,48 @@ export default new Router({
             component: login
         },
         {
-            path: '/:user/home',
-            name: 'home',
-            component: home,
+            path: '/admin/home',
+            name: 'adminHome',
+            component: adminHome,
             children: [
                 {
-                    path: '/:user/products',
-                    name: 'products',
-                    component: products
+                    path: '/admin/products',
+                    name: 'adminProducts',
+                    component: adminProducts
                 },
                 {
-                    path: '/:user/orders',
-                    name: 'orders',
-                    component: orders
+                    path: '/admin/orders',
+                    name: 'adminOrders',
+                    component: adminOrders
                 },
                 {
-                    path: '/:user/users',
-                    name: 'users',
-                    component: users
-                },
+                    path: '/admin/users',
+                    name: 'adminUsers',
+                    component: adminUsers
+                }
             ]
         },
-        
-       
-        
+        {
+            path: '/',
+            name: 'login',
+            component: login
+        },
+        {
+            path: '/client/home',
+            name: 'clientHome',
+            component: clientHome,
+            children: [
+                {
+                    path: '/client/products',
+                    name: 'clientProducts',
+                    component: clientProducts
+                },
+                {
+                    path: '/client/orders',
+                    name: 'clientOrders',
+                    component: clientOrders
+                }
+            ]
+        }
     ]
 })
