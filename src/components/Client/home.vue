@@ -23,11 +23,9 @@
     name: 'clientHome',
 
     data: () => ({
-      user: ''
     }),
+
     
-    created(){
-      
-    }
+    
   }
 </script>
