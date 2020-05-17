@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h3>Admin -- Orders</h3>
+    <h3>Orders</h3>
   </v-container>
 </template>
 
