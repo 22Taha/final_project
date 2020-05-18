@@ -79,7 +79,7 @@
 <script>
 
   export default {
-    name: 'adminProducts',
+    name: 'adminUsers',
 
     data: () => ({
       dialogUser: false,

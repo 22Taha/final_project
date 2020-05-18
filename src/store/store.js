@@ -65,17 +65,25 @@ export const store = new Vuex.Store({
             }
         ],
         orders: [
-            {
+            {   
+                id:1,
                 user: 'user',
-                validate: false,
                 total: '1600',
+                state:'new',
                 products: [
                     {
                         product_id: 2,
                         product_name: 'prod2',
                         price: 400,
                         quantity: 4,
+                    },
+                    {
+                        product_id: 1,
+                        product_name: 'prod1',
+                        price: 200,
+                        quantity: 14,
                     }
+
                 ]
             }
         ] 
@@ -94,6 +102,9 @@ export const store = new Vuex.Store({
         },
         categories: state => {
             return state.categories
+        },
+        orders:state=>{
+            return state.orders
         }
     },
     mutations:{
