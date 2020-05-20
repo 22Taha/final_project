@@ -65,19 +65,28 @@ export const store = new Vuex.Store({
             }
         ],
         orders: [
-            {
+            {   
+                id:1,
                 user: 'user',
-                validate: false,
-                total: '1600',
+                total: 1600,
+                state:'new',
                 products: [
                     {
                         product_id: 2,
                         product_name: 'prod2',
                         price: 400,
                         quantity: 4,
+                    },
+                    {
+                        product_id: 1,
+                        product_name: 'prod1',
+                        price: 200,
+                        quantity: 14,
                     }
+
                 ]
-            }
+            },
+            
         ] 
     },
     getters:{
@@ -94,6 +103,19 @@ export const store = new Vuex.Store({
         },
         categories: state => {
             return state.categories
+        },
+        orders:state=>{
+            return state.orders
+        },
+        newOrders:state=>{
+            return state.orders.filter(order=>order.state=="new")
+        },
+        totalIncom:state=>{
+            let total=0;
+            state.orders.forEach(order=>{
+                if(order.state=='confirmed') total+=order.total;
+            })
+            return total;
         }
     },
     mutations:{
@@ -150,7 +172,15 @@ export const store = new Vuex.Store({
                     })
                 }
             })
-        }
+        },
+        confirmOrder: (state, payload) => {
+                state.orders.filter(order => {
+                    if(order.id == payload.id){
+                        Object.assign(order, payload)
+                    }
+                })
+            
+        },
     },
 
     actions: {
