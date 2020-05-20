@@ -73,10 +73,32 @@ export const store = new Vuex.Store({
             }
         ],
         orders: [
+            {   
+                id:1,
+                user: 'user',
+                total: 1600,
+                state:'new',
+                products: [
+                    {
+                        product_id: 2,
+                        product_name: 'prod2',
+                        price: 400,
+                        quantity: 4,
+                    },
+                    {
+                        product_id: 1,
+                        product_name: 'prod1',
+                        price: 200,
+                        quantity: 14,
+                    }
+
+                ]
+            },
             {
-                username: 'user',
-                validate: false,
+                id:2,
+                user: 'client',
                 total: '1600',
+                state:'new',
                 products: [
                     {
                         product_id: 2,
@@ -87,22 +109,10 @@ export const store = new Vuex.Store({
                 ]
             },
             {
-                username: 'client',
-                validate: true,
-                total: '1600',
-                products: [
-                    {
-                        product_id: 2,
-                        product_name: 'prod2',
-                        price: 400,
-                        quantity: 4,
-                    }
-                ]
-            },
-            {
-                username: 'client',
-                validate: false,
+                id:3,
+                user: 'client',
                 total: '1000',
+                state:'confirmed',
                 products: [
                     {
                         product_id: 1,
@@ -140,7 +150,7 @@ export const store = new Vuex.Store({
         },
         ordersUser: state => username => {
             return state.orders.filter(order => {
-                if(order.username == username)
+                if(order.user == username)
                     return order
             })
         },
@@ -153,6 +163,22 @@ export const store = new Vuex.Store({
                 })[1].currentOrder
         },
         
+        categories: state => {
+            return state.categories
+        },
+        orders:state=>{
+            return state.orders
+        },
+        newOrders:state=>{
+            return state.orders.filter(order=>order.state=="new")
+        },
+        totalIncom:state=>{
+            let total=0;
+            state.orders.forEach(order=>{
+                if(order.state=='confirmed') total+=order.total;
+            })
+            return total;
+        }
     },
     mutations:{
         updateProduct: (state, payload) => {
@@ -247,7 +273,15 @@ export const store = new Vuex.Store({
         validateCurrentOrder: (state, payload) => {
             // validate order of user 
             console.log(payload)
-        }
+        },
+        confirmOrder: (state, payload) => {
+                state.orders.filter(order => {
+                    if(order.id == payload.id){
+                        Object.assign(order, payload)
+                    }
+                })
+            
+        },
     },
 
     actions: {
