@@ -127,7 +127,7 @@
       ]
     }),
      created(){
-      let currentUser = this.$store.getters.currentUser;
+      let currentUser = sessionStorage.getItem('current_user');
       if(currentUser==(null || undefined))this.$router.push({ name: 'login'}) ;
     },
 

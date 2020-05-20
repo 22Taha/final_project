@@ -89,7 +89,7 @@
     },
 
     created(){
-      this.username = this.$store.getters.currentUser;
+      this.username = sessionStorage.getItem('current_user');
       if(this.username==(null || undefined))this.$router.push({ name: 'login'}) ;
     },
 

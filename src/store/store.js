@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        currentUser: sessionStorage.getItem('current_user'),
+       
         users: [
             {   
                 id:1,
@@ -143,9 +143,7 @@ export const store = new Vuex.Store({
                 return true
             else return false 
         },
-        currentUser:state=>{
-            return state.currentUser;
-        },
+        
         users: state => {
             return state.users
         },
