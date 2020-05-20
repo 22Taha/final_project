@@ -11,8 +11,9 @@ export const store = new Vuex.Store({
                 username: 'user',
                 password: 'user',
 
-                curentOrder: {
+                currentOrder: {
                     user: 'user',
+                    validate: false,
                     total: 1200,
                     products: [
                         {
@@ -29,10 +30,17 @@ export const store = new Vuex.Store({
                 username: 'client',
                 password: 'client',
 
-                curentOrder: {
+                currentOrder: {
                     user: 'client',
-                    total: 800,
+                    validate: false,
+                    total: 1400,
                     products: [
+                        {
+                            product_id: 1,
+                            product_name: 'prod1',
+                            price: 300,
+                            quantity: 2,
+                        },
                         {
                             product_id: 2,
                             product_name: 'prod2',
@@ -86,7 +94,40 @@ export const store = new Vuex.Store({
 
                 ]
             },
-            
+            {
+                id:2,
+                user: 'client',
+                total: '1600',
+                state:'new',
+                products: [
+                    {
+                        product_id: 2,
+                        product_name: 'prod2',
+                        price: 400,
+                        quantity: 4,
+                    }
+                ]
+            },
+            {
+                id:3,
+                user: 'client',
+                total: '1000',
+                state:'confirmed',
+                products: [
+                    {
+                        product_id: 1,
+                        product_name: 'prod1',
+                        price: 300,
+                        quantity: 2,
+                    },
+                    {
+                        product_id: 2,
+                        product_name: 'prod2',
+                        price: 400,
+                        quantity: 1,
+                    }
+                ]
+            }
         ] 
     },
     getters:{
@@ -101,6 +142,27 @@ export const store = new Vuex.Store({
         products: state => {
             return state.products
         },
+        product: state => productId => {
+            return state.products.filter(product => {
+                if(product.id == productId)
+                    return product
+            })[0]
+        },
+        ordersUser: state => username => {
+            return state.orders.filter(order => {
+                if(order.user == username)
+                    return order
+            })
+        },
+        productsCurrentOrder: state => username => {
+                
+                return state.users.map(user => {
+                    if(user.username == username){
+                        return user   
+                    }  
+                })[1].currentOrder
+        },
+        
         categories: state => {
             return state.categories
         },
@@ -143,8 +205,7 @@ export const store = new Vuex.Store({
                 state.users.filter(user => {
                     if(user.id == payload.id){
                         if(state.users.filter(user => user.username == payload.username).length) alert('this username is already token, retry')
-                        else  Object.assign(user, payload)
-                        
+                        else  Object.assign(user, payload)  
                     }
                 })
             }else{
@@ -154,24 +215,64 @@ export const store = new Vuex.Store({
                 state.users.push(payload)
                 state.userNextId++
                 }
-                
             }
         },
         deleteUser: (state, payload) => {
             state.users.splice(state.users.indexOf(payload), 1)
         },
-        addOrder: (state, payload) => {
+        addProductToCurrentOrder: (state, payload) => {
             state.users.filter(user => {
                 if(user.username == payload.username){
-                    user.curentOrder.total = user.curentOrder.total + (payload.price * payload.quantity)
-                    user.curentOrder.products.push({ 
-                        "product_id": payload.id, 
-                        "product_name": payload.name,
-                        "price": payload.price, 
-                        "quantity": payload.quantity,
-                    })
+                    user.currentOrder.total = user.currentOrder.total + (payload.price * payload.quantity)
+                    if(user.currentOrder.products.filter(product => product.product_id == payload.id).length){
+                        user.currentOrder.products.filter(product => {
+                            if(product.product_id == payload.id){
+                                product.quantity += parseInt(payload.quantity)
+                            }
+                        })
+                    }else{
+                        user.currentOrder.products.push({ 
+                            "product_id": payload.id, 
+                            "product_name": payload.name,
+                            "price": payload.price, 
+                            "quantity": payload.quantity,
+                        })
+                    }
                 }
             })
+            state.products.filter(product => {
+                if(product.id == payload.id)
+                    product.quantity -= payload.quantity 
+            })
+        },
+        updateProductCurrentOrder: (state, payload) => {
+            let oldSum;
+            let newSum;
+            state.users.map(user => {
+                if(user.username == payload.username){
+                    user.currentOrder.products.map(product => {
+                        if(product.product_id == payload.productId){
+                            oldSum = product.price*product.quantity
+                            product.quantity = payload.productQuantity
+                            newSum = product.price*product.quantity
+                        }
+                    })
+                    user.currentOrder.total -= oldSum
+                    user.currentOrder.total += newSum
+                }
+            })
+        },
+        deleteProductFromCurrentOrder: (state, payload) => {
+            state.users.map(user => {
+                if(user.username == payload.username){
+                    user.currentOrder.products.splice(user.currentOrder.products.indexOf(payload.product), 1)
+                    user.currentOrder.total -= (payload.product.price * payload.product.quantity)
+                }
+            })
+        },
+        validateCurrentOrder: (state, payload) => {
+            // validate order of user 
+            console.log(payload)
         },
         confirmOrder: (state, payload) => {
                 state.orders.filter(order => {

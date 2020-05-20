@@ -1,7 +1,8 @@
 <template>
-  <v-container>
+  <v-container fluid >
+
    <v-app-bar
-      color="green"
+      color="teal darken-2"
       dense
       flat
       dark
@@ -13,7 +14,6 @@
     </v-app-bar> 
 
       <router-view class="mt-5"></router-view>
-    
     </v-container>
 </template>
 

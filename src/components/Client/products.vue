@@ -1,11 +1,12 @@
 <template>
-<div>
+<v-container fluid class="blue lighten-3">
   <v-data-table
     :headers="headers"
     :items="products"
+    
+    :items-per-page="7"
     class="elevation-1"
     :search="search"
-    @click:row="addOrder">
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
@@ -20,6 +21,16 @@
       ></v-text-field>
       </v-toolbar>
     </template>
+    
+     <template v-slot:item.actions="{ item }">
+      <v-icon class="mr-4" @click="addToOrder(item)" >
+        mdi-cart-arrow-down
+      </v-icon>
+      <v-icon class="mr-4" @click="showProduct(item)">
+        mdi-eye-outline
+      </v-icon>
+    </template>
+
   </v-data-table>
 
 
@@ -33,7 +44,7 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="9">
-              <v-text-field v-model="quantity" label="Quantity"></v-text-field>
+              <v-text-field v-model="quantity" type="number" min="1" step="0" label="Quantity"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -47,7 +58,7 @@
     </v-card>
   </v-dialog>
 
-  </div>
+</v-container>
 </template>
 
 
@@ -57,15 +68,16 @@
     data: () => ({
       search: '',
       username: '',
-      quantity: '',
+      quantity: null,
       dialog: false,
-      addProduct: '',
+      addProduct: null,
       headers: [
         { text: 'ID', sortable: false, value: 'id' },
         { text: 'Name', value: 'name' },
         { text: 'Price', value: 'price' },
         { text: 'Description', value: 'description' },
         { text: 'Category', value: 'category' },
+        { text: 'Quantity', value: 'quantity' },
         { text: 'Actions', value: 'actions', sortable: false },
       ]
     }),
@@ -81,22 +93,29 @@
     },
 
     methods: {
+      showProduct(item){
+        this.$router.push({ name: 'clientProduct', params: {id: item.id}})
+      },
 
-      addOrder(item){
+      addToOrder(item){
         this.addProduct = Object.assign({}, item)
         this.addProduct['username']=this.username
         this.dialog = true
       },
       
       save() {
-        this.addProduct['quantity']=this.quantity
-        this.$store.commit('addOrder', this.addProduct)
-        this.close()
+        if(this.quantity > this.addProduct.quantity){
+          alert("Quantity available: "+ this.addProduct.quantity)
+        }else{
+          this.addProduct['quantity']=this.quantity
+          this.$store.commit('addProductToCurrentOrder', this.addProduct)
+          this.close()
+        }
       },
 
       close(){
         this.addProduct = null
-        this.quantity= ''
+        this.quantity= null
         this.dialog = false
       },
     },
