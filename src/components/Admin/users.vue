@@ -88,7 +88,6 @@
       headers: [
         { text: 'ID', sortable: false, value: 'id' },
         { text: 'Userame', value: 'username' },
-        { text: 'Password', value: 'password' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
     
@@ -119,6 +118,7 @@
     methods: {
       editItem (item) {
         this.editedUser = Object.assign({}, item)
+        this.editedUser.password='';
         this.dialogUser = true
       },
 

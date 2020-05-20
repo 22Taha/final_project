@@ -31,8 +31,9 @@
 </template>
 
 <script>
-
+var sha1= require('sha1');
   export default {
+
     name: 'login',
 
     data: () => ({
@@ -43,11 +44,11 @@
         
     methods:{
       login(){
-        if(this.username=='admin' && this.password=='admin'){
+        if(this.$store.getters.user(this.username, sha1(this.password)) && this.username=='admin'){
           sessionStorage.setItem('username', this.username)
           this.$router.push({ name: 'adminHome'})
         }else{
-          if(this.$store.getters.user(this.username, this.password)){
+          if(this.$store.getters.user(this.username, sha1(this.password) )){
             sessionStorage.setItem('username', this.username)
             this.$router.push({ name: 'clientHome'})
           }else
