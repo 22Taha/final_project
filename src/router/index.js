@@ -10,6 +10,7 @@ import adminUsers from './../components/Admin/users'
 import clientHome from './../components/Client/home'
 import clientProducts from './../components/Client/products'
 import clientOrders from './../components/Client/orders'
+import clientProduct from './../components/Client/product'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
                     path: '/client/orders',
                     name: 'clientOrders',
                     component: clientOrders
+                },
+                {
+                    path: '/client/product/:id',
+                    name: 'clientProduct',
+                    component: clientProduct
                 }
             ]
         }
