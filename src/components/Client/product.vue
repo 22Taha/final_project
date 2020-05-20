@@ -18,6 +18,10 @@
       }
       
     },
+    created(){
+      let currentUser = this.$store.getters.currentUser;
+      if(currentUser==(null || undefined))this.$router.push({ name: 'login'}) ;
+    },
 
     methods: {
      

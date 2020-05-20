@@ -126,6 +126,10 @@
         { text: 'Actions', value: 'actions', sortable: false },
       ]
     }),
+     created(){
+      let currentUser = this.$store.getters.currentUser;
+      if(currentUser==(null || undefined))this.$router.push({ name: 'login'}) ;
+    },
 
     computed: {
       username(){

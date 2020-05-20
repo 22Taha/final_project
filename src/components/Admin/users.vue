@@ -114,6 +114,11 @@
         val || this.close()
       },
     },
+    created(){
+      let currentUser= this.$store.getters.currentUser;
+      if(currentUser!='admin')this.$router.push({ name: 'login'}) ;
+
+    }, 
 
     methods: {
       editItem (item) {

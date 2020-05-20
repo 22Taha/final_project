@@ -45,11 +45,11 @@ var sha1= require('sha1');
     methods:{
       login(){
         if(this.$store.getters.user(this.username, sha1(this.password)) && this.username=='admin'){
-          sessionStorage.setItem('username', this.username)
+          sessionStorage.setItem('current_user', this.username)
           this.$router.push({ name: 'adminHome'})
         }else{
           if(this.$store.getters.user(this.username, sha1(this.password) )){
-            sessionStorage.setItem('username', this.username)
+            sessionStorage.setItem('current_user', this.username)
             this.$router.push({ name: 'clientHome'})
           }else
             alert('user doesn\'t exist !!')

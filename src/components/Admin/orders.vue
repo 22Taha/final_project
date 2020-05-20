@@ -140,6 +140,11 @@
         
       ]
     }),
+    created(){
+      let currentUser= this.$store.getters.currentUser;
+      if(currentUser!='admin')this.$router.push({ name: 'login'}) ;
+
+    }, 
 
     computed: {
       orders() {
