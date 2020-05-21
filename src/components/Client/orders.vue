@@ -72,22 +72,21 @@
         <v-card-title>
           Order
           <v-spacer></v-spacer>
-          <v-chip v-if="order.validate"
+          <v-chip v-if="order.state=='new'"
+            class="ma-2"
+            color="orange darken-1"
+            text-color="white"
+          >
+            Pending
+            <v-icon right>mdi-timer-sand</v-icon>
+          </v-chip>
+          <v-chip v-else
             class="ma-2"
             color="green darken-1"
             text-color="white"
           >
             Validated
             <v-icon right>mdi-check-circle</v-icon>
-          </v-chip>
-          <v-chip v-else
-            class="ma-2"
-            color="orange darken-1
-"
-            text-color="white"
-          >
-            Pending
-            <v-icon right>mdi-timer-sand</v-icon>
           </v-chip>
         </v-card-title>
         <v-card-text class="mt-4">  
