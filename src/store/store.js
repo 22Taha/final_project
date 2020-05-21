@@ -70,8 +70,10 @@ export const store = new Vuex.Store({
                 description: 'description2',
                 category: 'category2',
                 quantity:15
-            }
+            },
         ],
+        nextOrderId: 4,
+        notification:'',
         orders: [
             {   
                 id:1,
@@ -97,7 +99,7 @@ export const store = new Vuex.Store({
             {
                 id:2,
                 user: 'client',
-                total: '1600',
+                total: 1600,
                 state:'new',
                 products: [
                     {
@@ -111,7 +113,7 @@ export const store = new Vuex.Store({
             {
                 id:3,
                 user: 'client',
-                total: '1000',
+                total: 1000,
                 state:'confirmed',
                 products: [
                     {
@@ -178,7 +180,10 @@ export const store = new Vuex.Store({
                 if(order.state=='confirmed') total+=order.total;
             })
             return total;
-        }
+        },
+        notification: state => {
+            return state.notification
+        },
     },
     mutations:{
         updateProduct: (state, payload) => {
@@ -219,6 +224,9 @@ export const store = new Vuex.Store({
         },
         deleteUser: (state, payload) => {
             state.users.splice(state.users.indexOf(payload), 1)
+        },
+        resetNotification: state => {
+            state.notification = ''
         },
         addProductToCurrentOrder: (state, payload) => {
             state.users.filter(user => {

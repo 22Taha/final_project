@@ -1,10 +1,14 @@
 <template>
 <v-container fluid class="blue lighten-3">
+  <div>
   <v-data-table
     :headers="headers"
     :items="products"
     
+    :page.sync="page"
+    hide-default-footer
     :items-per-page="7"
+    @page-count="pageCount = $event"
     class="elevation-1"
     :search="search"
   >
@@ -57,7 +61,11 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
+  </div>
+  <div class="text-center pt-2">
+      <v-pagination v-model="page" :length="pageCount"></v-pagination>
+      
+    </div>
 </v-container>
 </template>
 
@@ -67,6 +75,9 @@
     name: 'clientProducts',
     data: () => ({
       search: '',
+      itemsPerPage:7,
+      page: 1,
+      pageCount: 0,
       username: '',
       quantity: null,
       dialog: false,
@@ -104,8 +115,8 @@
       },
       
       save() {
-        if(this.quantity > this.addProduct.quantity){
-          alert("Quantity available: "+ this.addProduct.quantity)
+        if(this.quantity > this.addProduct.quantity || this.quantity < 1){
+          alert("Quantity invalid!  "+ this.addProduct.quantity)
         }else{
           this.addProduct['quantity']=this.quantity
           this.$store.commit('addProductToCurrentOrder', this.addProduct)
