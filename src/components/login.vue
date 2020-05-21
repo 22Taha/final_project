@@ -46,16 +46,20 @@ var sha1= require('sha1');
       login(){
         if(this.$store.getters.user(this.username, sha1(this.password)) && this.username=='admin'){
           sessionStorage.setItem('current_user', this.username)
-          this.$router.push({ name: 'adminHome'})
+          this.$router.push({ name: 'adminProducts'})
         }else{
           if(this.$store.getters.user(this.username, sha1(this.password) )){
             sessionStorage.setItem('current_user', this.username)
-            this.$router.push({ name: 'clientHome'})
+            this.$router.push({ name: 'clientProducts'})
           }else
             alert('user doesn\'t exist !!')
         }
       },
     
+    },
+
+    beforeCreate(){
+      this.$store.commit('initialState')
     }
   }
 </script>

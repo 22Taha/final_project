@@ -85,7 +85,7 @@
             color="green darken-1"
             text-color="white"
           >
-            Validated
+            Confirmed
             <v-icon right>mdi-check-circle</v-icon>
           </v-chip>
         </v-card-title>
@@ -117,6 +117,7 @@
       dialog: false,
       editQuantity: 0,
       editProductId: '',
+      username: '',
       headers: [
         { text: 'ID', sortable: false, value: 'product_id' },
         { text: 'Name', value: 'product_name' },
@@ -126,15 +127,12 @@
       ]
     }),
      created(){
-      let currentUser = sessionStorage.getItem('current_user');
-      if(currentUser==(null || undefined))this.$router.push({ name: 'login'}) ;
+      this.username = sessionStorage.getItem('current_user');
+      if(this.username==(null || undefined))this.$router.push({ name: 'login'}) ;
     },
 
     computed: {
-      username(){
-        return sessionStorage.getItem('username')
-      },
-
+        
       orders(){
         return this.$store.getters.ordersUser(this.username)
       },

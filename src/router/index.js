@@ -33,6 +33,11 @@ export default new Router({
                     component: adminProducts
                 },
                 {
+                    path: '/',
+                    name: 'adminProducts',
+                    component: adminProducts
+                },
+                {
                     path: '/admin/orders',
                     name: 'adminOrders',
                     component: adminOrders
@@ -52,6 +57,11 @@ export default new Router({
             children: [
                 {
                     path: '/client/products',
+                    name: 'clientProducts',
+                    component: clientProducts,
+                },
+                {
+                    path: '/',
                     name: 'clientProducts',
                     component: clientProducts,
                 },
