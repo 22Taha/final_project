@@ -126,6 +126,10 @@
         { text: 'Actions', value: 'actions', sortable: false },
       ]
     }),
+     created(){
+      let currentUser = sessionStorage.getItem('current_user');
+      if(currentUser==(null || undefined))this.$router.push({ name: 'login'}) ;
+    },
 
     computed: {
       username(){

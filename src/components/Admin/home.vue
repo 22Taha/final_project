@@ -28,8 +28,9 @@
     }),
     
     created(){
-      
-      
-    }
+      let currentUser= sessionStorage.getItem('current_user');
+      if(currentUser!='admin')this.$router.push({ name: 'login'}) ;
+
+    },  
   }
 </script>

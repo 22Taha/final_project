@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
+       
         users: [
             {   
                 id:1,
@@ -142,6 +143,7 @@ export const store = new Vuex.Store({
                 return true
             else return false 
         },
+        
         users: state => {
             return state.users
         },

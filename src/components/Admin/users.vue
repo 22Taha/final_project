@@ -114,6 +114,11 @@
         val || this.close()
       },
     },
+    created(){
+      let currentUser= sessionStorage.getItem('current_user');
+      if(currentUser!='admin')this.$router.push({ name: 'login'}) ;
+
+    }, 
 
     methods: {
       editItem (item) {
