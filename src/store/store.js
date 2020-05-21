@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
+var sha1= require('sha1');
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -8,8 +8,14 @@ export const store = new Vuex.Store({
         users: [
             {   
                 id:1,
-                username: 'user',
-                password: 'user',
+                username:'admin',
+                password: sha1('admin'),
+
+            },
+            {   
+                id:2,
+                username:'user',
+                password: sha1('user'),
 
                 currentOrder: {
                     user: 'user',
@@ -26,9 +32,9 @@ export const store = new Vuex.Store({
                 }
             },
             {   
-                id:2,
+                id:3,
                 username: 'client',
-                password: 'client',
+                password: sha1('client'),
 
                 currentOrder: {
                     user: 'client',
@@ -51,7 +57,7 @@ export const store = new Vuex.Store({
                 }
             },  
         ],
-        userNextId:3,
+        userNextId:4,
         categories: ['category1', 'category2'],
         productCountId: 3,
         products: [
@@ -203,15 +209,18 @@ export const store = new Vuex.Store({
         updateUser: (state, payload) => {
             if(state.users.filter(user => user.id == payload.id).length){
                 state.users.filter(user => {
-                    if(user.id == payload.id){
-                        if(state.users.filter(user => user.username == payload.username).length) alert('this username is already token, retry')
-                        else  Object.assign(user, payload)  
+                    if(user.id == payload.id && user.username!=payload.username){
+                        if(state.users.filter(user => user.username == payload.username).length){alert('this username is already token, retry') } 
+                        else {
+                            sha1(payload.password)
+                            Object.assign(user, payload) }   
                     }
                 })
             }else{
-                if(state.users.filter(user => user.username == payload.username).length) alert('this username is already token, retry')
-                else{
+                if(state.users.filter(user => user.username == payload.username).length) {alert('this username is already token, retry')
+            }else{
                 payload.id = state.userNextId
+                sha1(payload)
                 state.users.push(payload)
                 state.userNextId++
                 }
