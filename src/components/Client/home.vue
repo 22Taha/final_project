@@ -25,7 +25,9 @@
     data: () => ({
     }),
 
-    
+    beforeCreate(){
+      this.$store.commit('initialState')
+    }
     
   }
 </script>

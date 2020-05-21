@@ -1,13 +1,6 @@
 <template>
 <div>
-   <v-chip
-      class="ma-2"
-      color="orange"
-      text-color="white"
-    >
-      Total income: {{this.totalIncom}}
-      
-    </v-chip>
+   
   <v-data-table
     :headers="headers"
     :items="orders"
@@ -18,21 +11,28 @@
     <template v-slot:top>
       <v-toolbar flat color="white">
         
-        <v-toolbar-title style=" padding-right:50px;"> Orders  </v-toolbar-title>
-        <v-btn small color="primary" dark >All </v-btn>
-        <p style=" padding-right:20px;"></p>
-        <v-btn @click="filterOrders" small color="success" dark>New </v-btn>
+        <v-chip
+          class="ma-2"
+          color="orange"
+          text-color="white"
+        >
+          Total income: {{totalIncom}}
+          
+        </v-chip>
         
-      <!-- <v-switch @change="filterOrders" style="margin-top:25px;" v-model="filterSwitch" > </v-switch> -->
-      
-      <v-spacer></v-spacer>
-        <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
+        <v-spacer></v-spacer>
+        
+          <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+
+        <v-spacer></v-spacer>
+
+        <v-switch v-model="newOrders" class="mt-6" label="Show new orders"></v-switch>
        
       </v-toolbar>
     </template>
@@ -105,7 +105,6 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
   </div>
 </template>
 
@@ -117,6 +116,7 @@
     data: () => ({
       search: '',
       dialog: false,
+      newOrders: false,
       order:{   
                 id:'',
                 user: '',
@@ -136,7 +136,7 @@
       headers: [
         { text: 'ID', sortable: false, value: 'id' },
         { text: 'client', value: 'user' },
-        {text:'State', value:'state'}
+        { text:'State', value:'state' }
         
       ]
     }),
@@ -148,14 +148,14 @@
 
     computed: {
       orders() {
-        return this.$store.getters.orders
+        if(this.newOrders)
+          return this.$store.getters.newOrders
+        else
+          return this.$store.getters.orders
       },
       totalIncom(){
         return this.$store.getters.totalIncom
       },
-      newOrders(){
-        return this.$store.getters.newOrders
-      }
 
     },
 
@@ -178,10 +178,6 @@
         this.$nextTick(() => {
           this.order = Object.assign({}, this.defaultItem)
         })
-      },
-      filterOrders(){
-        this.items=this.newOrders;
-        
       }
     },
   }
